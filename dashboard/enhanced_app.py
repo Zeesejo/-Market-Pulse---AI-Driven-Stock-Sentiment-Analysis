@@ -162,7 +162,11 @@ class EnhancedMarketPulseDashboard:
                 'MACD',
                 'RSI'
             ],
-            row_width=[0.2, 0.2, 0.2, 0.4]
+            row_heights=[0.4, 0.2, 0.2, 0.2],
+            specs=[[{"secondary_y": True}],
+                   [{"secondary_y": False}],
+                   [{"secondary_y": False}],
+                   [{"secondary_y": False}]]
         )
         
         # Candlestick chart
@@ -190,7 +194,7 @@ class EnhancedMarketPulseDashboard:
             row=1, col=1
         )
         
-        # Volume
+        # Volume - add to secondary y-axis
         fig.add_trace(
             go.Bar(x=data.index, y=data['Volume'], 
                    name='Volume', opacity=0.3),
@@ -242,6 +246,13 @@ class EnhancedMarketPulseDashboard:
             height=800,
             showlegend=True
         )
+        
+        # Update y-axis labels
+        fig.update_yaxes(title_text="Price ($)", row=1, col=1, secondary_y=False)
+        fig.update_yaxes(title_text="Volume", row=1, col=1, secondary_y=True)
+        fig.update_yaxes(title_text="Price ($)", row=2, col=1)
+        fig.update_yaxes(title_text="MACD", row=3, col=1)
+        fig.update_yaxes(title_text="RSI", row=4, col=1)
         
         return fig
     
